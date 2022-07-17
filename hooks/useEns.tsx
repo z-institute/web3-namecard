@@ -1,7 +1,7 @@
 import { useProvider, useEnsName, useAccount } from "wagmi";
 import { useEffect, useState } from "react";
 
-const useEns = (_address?: string) => {
+const useEns = (_address?: string, _ensName?: string) => {
   const { address } = useAccount();
   const addr = _address || address;
   const [retEnsData, setRetEnsData] = useState({});
@@ -14,14 +14,18 @@ const useEns = (_address?: string) => {
     },
   });
   useEffect(() => {
+    if (_ensName) {
+      setEnsData(_ensName);
+    }
+  }, [_ensName]);
+  useEffect(() => {
     if (data) {
-      console.log(data);
       setEnsData(data.toString());
     }
   }, [data]);
 
-  async function setEnsData(_ensName: string) {
-    const resolver = await provider.getResolver(_ensName);
+  async function setEnsData(ensName: string) {
+    const resolver = await provider.getResolver(ensName);
     const email = await resolver!.getText("email");
     const twitter = await resolver!.getText("com.twitter");
     const github = await resolver!.getText("com.github");
@@ -29,7 +33,7 @@ const useEns = (_address?: string) => {
       email,
       twitter,
       github,
-      _ensName,
+      ensName,
     });
   }
 

@@ -10,7 +10,7 @@ import useEnsData from "../hooks/useEns";
 
 const Home: NextPage = () => {
   const [domainName, setDomainName] = useState("cheyuwu.eth");
-  const ensData = useEnsData();
+  const ensData = useEnsData(undefined, "cheyuwu.eth");
 
   return (
     <>
