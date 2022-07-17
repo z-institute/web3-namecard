@@ -57,7 +57,7 @@ const Home: NextPage = () => {
             <pre style={{ width: "500px", whiteSpace: "pre-line" }}>
               {JSON.stringify(ensData, null, 4)}
             </pre>
-            <pre>{JSON.stringify(imgColor, null, 4)}</pre>
+            {/* <pre>{JSON.stringify(imgColor, null, 4)}</pre> */}
           </Box>
         </Box>
 
