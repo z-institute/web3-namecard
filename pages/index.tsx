@@ -6,7 +6,6 @@ import {
   HStack,
   Input,
   Link,
-  SimpleGrid,
   Text,
 } from "@chakra-ui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
@@ -17,10 +16,8 @@ import Card from "../components/Card";
 import NFTCard from "../components/NFTCard";
 import useEnsData from "../hooks/useEns";
 import useImgColor from "../hooks/useImgColor";
-import useNFT from "../hooks/useNFT";
 
 import { Spinner } from "@chakra-ui/react";
-import { useAccount } from "wagmi";
 import { colorRawType } from "../types/colorRawType";
 import { ensDataType } from "../types/ensDataType";
 
@@ -29,7 +26,6 @@ const Home: NextPage = () => {
   const [finalDomainName, setFinalDomainName] = useState(domainName);
   const ensData: ensDataType = useEnsData(undefined, finalDomainName);
 
-  const { address } = useAccount();
   const imgColor: Array<colorRawType> = useImgColor(ensData.avatarUrl || "");
   const [sortedColors, setSortedColors] = useState<Array<colorRawType>>([]);
 
@@ -88,7 +84,6 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <Center
         w="100%"
         height="100vh"
@@ -168,7 +163,7 @@ const Home: NextPage = () => {
             </pre> */}
             {/* <pre>{JSON.stringify(imgColor, null, 4)}</pre> */}
             {/* <pre>{JSON.stringify(nft, null, 4)}</pre> */}
-            <NFTCard ethAddress={ensData.ethAddress || ''}></NFTCard>
+            <NFTCard ethAddress={ensData.ethAddress || ""}></NFTCard>
           </Box>
         </Box>
 
@@ -178,19 +173,40 @@ const Home: NextPage = () => {
           cardBgColor={convertColor(imgColor && imgColor[1])}
         ></Card>
       </Center>
-      <Center w="100%" py="3" style={{ position: "absolute", bottom: 0 }}>
-        This Demo is made by{" "}
-        <Link px={2} isExternal href="https://www.facebook.com/cheyuwu345">
-          Che-Yu Wu
-        </Link>{" "}
-        and{" "}
-        <Link
-          px={2}
-          isExternal
-          href="https://www.facebook.com/lee.ting.ting.tina"
-        >
-          Ting-Ting Lee
-        </Link>
+
+      <Center
+        w="100%"
+        py="3"
+        style={{ position: "absolute", bottom: 0 }}
+        flexDirection="column"
+      >
+        <Text mb={1}>
+          Set your ENS records at{" "}
+          <Link href="https://app.ens.domains" textDecoration="underline">
+            app.ens.domains
+          </Link>{" "}
+          to show on this namecard.
+        </Text>
+        <Text>
+          This Demo is made by{" "}
+          <Link
+            px={2}
+            isExternal
+            href="https://www.facebook.com/cheyuwu345"
+            textDecoration="underline"
+          >
+            Che-Yu Wu
+          </Link>{" "}
+          and{" "}
+          <Link
+            px={2}
+            isExternal
+            href="https://www.facebook.com/lee.ting.ting.tina"
+            textDecoration="underline"
+          >
+            Ting-Ting Lee
+          </Link>
+        </Text>
       </Center>
     </>
   );
