@@ -29,11 +29,14 @@ const useEns = (_address?: string, _ensName?: string) => {
     const email = await resolver!.getText("email");
     const twitter = await resolver!.getText("com.twitter");
     const github = await resolver!.getText("com.github");
+    const avatar = await resolver!.getAvatar();
+    const avatarUrl = avatar?.url;
     setRetEnsData({
       email,
       twitter,
       github,
       ensName,
+      avatarUrl,
     });
   }
 
