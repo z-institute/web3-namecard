@@ -1,11 +1,15 @@
-import { Center } from "@chakra-ui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Card from "../components/Card";
+import { Center, Box, Heading } from "@chakra-ui/react";
+import { Input } from "@chakra-ui/react";
+import { Button, ButtonGroup } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
 import useEnsData from "../hooks/useEns";
 
 const Home: NextPage = () => {
+  const [domainName, setDomainName] = useState("cheyuwu.eth");
   const ensData = useEnsData();
 
   return (
@@ -18,8 +22,24 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <Center w="100%" height="100vh" backgroundColor="gray.100">
-        <ConnectButton />
+        <Box>
+          <Heading mb={5} color="brand-dark">
+            The ENS Namecard
+          </Heading>
+
+          <ConnectButton />
+          <Input
+            mt="5"
+            value={domainName}
+            onChange={(e) => setDomainName(e.target.value)}
+          ></Input>
+          <Button mt="2" backgroundColor="brand" color="white" w="100%">
+            {" "}
+            Fetch
+          </Button>
+        </Box>
 
         <Card></Card>
         <div>{JSON.stringify(ensData)}</div>
