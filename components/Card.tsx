@@ -1,5 +1,5 @@
 
-import styles from '../styles/Card.module.css';
+import styles from '../styles/card.module.css';
 import { Heading, Box, Center, Image, Text, VStack, Flex, Spacer } from '@chakra-ui/react'
 import { useState, useEffect } from 'react';
 import classnames from 'classnames'
