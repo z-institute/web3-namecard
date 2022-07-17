@@ -5,19 +5,24 @@ import Card from "../components/Card";
 import { Center, Box, Heading, HStack } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
 import { Button, ButtonGroup, Link, Text } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction } from "react";
 import useEnsData from "../hooks/useEns";
 import useImgColor from "../hooks/useImgColor";
 import { Spinner } from '@chakra-ui/react'
 import { isCommunityResourcable } from "@ethersproject/providers";
 import { useProvider, useEnsName, useAccount } from "wagmi";
+import { ensDataType } from "../types/ensDataType";
+import { colorRawType } from "../types/colorRawType"
+
+
+
 const Home: NextPage = () => {
   const [domainName, setDomainName] = useState("");
   const [finalDomainName, setFinalDomainName] = useState(domainName);
-  const ensData = useEnsData(undefined, finalDomainName);
+  const ensData: ensDataType = useEnsData(undefined, finalDomainName);
   const { address } = useAccount();
-  const imgColor = useImgColor(ensData.avatarUrl || "");
-  const [sortedColors, setSortedColors] = useState([]);
+  const imgColor: Array<colorRawType> = useImgColor(ensData.avatarUrl || "");
+  const [sortedColors, setSortedColors] = useState<Array<colorRawType>>([]);
 
   const [isFetching, setIsFetching] = useState(false);
 
@@ -30,8 +35,8 @@ const Home: NextPage = () => {
   };
 
   useEffect(() => {
-    setDomainName(ensData.ensName);
-    setFinalDomainName(ensData.ensName)
+    setDomainName(ensData.ensName || '');
+    setFinalDomainName(ensData.ensName || '')
   }, [ensData])
 
   useEffect(() => {
@@ -39,22 +44,22 @@ const Home: NextPage = () => {
   }, [imgColor])
 
 
-  const convertColor = (clr) => {
+  const convertColor = (clr: colorRawType | undefined) => {
     if (clr) {
       return `rgb(${clr._rgb[0]},${clr._rgb[1]},${clr._rgb[2]})`
     } else {
-      return false
+      return ''
     }
   }
 
-  const getBrightness = (clr) => {
+  const getBrightness = (clr: colorRawType) => {
     if (clr) {
       return clr._rgb[0] * 0.299 + clr._rgb[1] * 0.587 + clr._rgb[2] * 0.114
     } else {
-      return false
+      return 0
     }
   }
-  const sortColors = (colors) => {
+  const sortColors = (colors: Array<colorRawType>) => {
     if (!colors) return []
     let clrs = colors
       .map(clr => ({ clr, brightness: getBrightness(clr) }))
@@ -92,7 +97,7 @@ const Home: NextPage = () => {
             mt="5"
             value={domainName}
             placeholder="Enter your ens domain name"
-            onChange={(e) => setDomainName(e.target.value)}
+            onChange={(e: { target: { value: SetStateAction<string>; }; }) => setDomainName(e.target.value)}
           ></Input>
           <HStack spacing="5" mt={2}>
             <Text>Example: </Text>

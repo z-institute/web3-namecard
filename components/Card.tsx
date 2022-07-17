@@ -5,18 +5,32 @@ import { useState, useEffect } from 'react';
 import classNames from 'classnames'
 import { Link } from '@chakra-ui/react'
 import { FaTwitter, FaDiscord, FaGlobe, FaGithub } from "react-icons/fa";
+import { colorRawType } from "../types/colorRawType"
 //https://www.w3schools.com/howto/howto_css_flip_card.asp
-const Card = ({ cardData, cardBgColor, colors }) => {
+
+interface cardProps {
+  cardData: {
+    ensName?: string,
+    avatarUrl?: string,
+    twitter?: string,
+    github?: string,
+    websiteUrl?: string
+    email?: string,
+  },
+  cardBgColor: string,
+  colors: Array<colorRawType>
+}
+const Card = ({ cardData, cardBgColor, colors }: cardProps) => {
   const [isFlipped, setIsFlipped] = useState(true);
 
-  const convertColor = (clr) => {
+  const convertColor = (clr: colorRawType) => {
     if (clr) {
       return `rgb(${clr._rgb[0]},${clr._rgb[1]},${clr._rgb[2]})`
     } else {
       return false
     }
   }
-  const getLastName = (str: String) => (str || '').split("/").slice(-1)[0]
+  const getLastName = (str: String | undefined) => (str || '').split("/").slice(-1)[0]
 
   useEffect(() => {
     setIsFlipped(false)
@@ -92,9 +106,11 @@ const Card = ({ cardData, cardBgColor, colors }) => {
             </VStack>
           </Flex>
           <Flex flex={1}>
-            <Box fontSize="7xl" mb={-5} style={{ "-webkit-text-stroke": `1px ${colors[3]}`, color: 'transparent', fontWeight: 900 }}>
-              {cardData.ensName}
-            </Box>
+            {// @ts-ignore
+              <Box fontSize="7xl" mb={-5} style={{ "-webkit-text-stroke": `1px ${colors[3]}`, color: 'transparent', fontWeight: 900 }}>
+                {cardData.ensName}
+              </Box>
+            }
           </Flex>
         </Flex>
       </Center>
