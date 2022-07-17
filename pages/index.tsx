@@ -168,7 +168,7 @@ const Home: NextPage = () => {
             </pre> */}
             {/* <pre>{JSON.stringify(imgColor, null, 4)}</pre> */}
             {/* <pre>{JSON.stringify(nft, null, 4)}</pre> */}
-            <NFTCard></NFTCard>
+            <NFTCard ethAddress={ensData.ethAddress || ''}></NFTCard>
           </Box>
         </Box>
 

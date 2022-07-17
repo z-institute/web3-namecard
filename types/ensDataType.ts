@@ -5,4 +5,5 @@ export type ensDataType = {
   github?: string,
   websiteUrl?: string
   email?: string,
+  ethAddress?: string,
 }
