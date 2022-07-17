@@ -19,6 +19,15 @@ const Home: NextPage = () => {
   const setQuery = () => {
     setFinalDomainName(domainName);
   };
+
+  const convertColor = (clr) => {
+    if (clr) {
+      return `rgb(${clr._rgb[0]},${clr._rgb[1]},${clr._rgb[2]})`
+    } else {
+      return `rgb(0,0,0)`
+
+    }
+  }
   return (
     <>
       <Head>
@@ -30,7 +39,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Center w="100%" height="100vh" backgroundColor="gray.100">
+      <Center w="100%" height="100vh" backgroundColor={convertColor(imgColor && imgColor[0])} transitionDuration="1s">
         <Box>
           <Heading mb={5} color="brand-dark">
             The ENS Namecard
@@ -60,16 +69,17 @@ const Home: NextPage = () => {
                     key={dataId}
                     w={50}
                     h={50}
-                    backgroundColor={`rgb(${data._rgb[0]},${data._rgb[1]},${data._rgb[2]})`}
+                    shadow="xl"
+                    backgroundColor={convertColor(data)}
                   ></Box>
                 ))}
             </HStack>
             {/* <pre style={{ width: "500px", whiteSpace: "pre-line" }}>
               {JSON.stringify(imgColor, null, 4)}
             </pre> */}
-            <pre style={{ width: "500px", whiteSpace: "pre-line" }}>
+            {/* <pre style={{ width: "500px", whiteSpace: "pre-line" }}>
               {JSON.stringify(ensData, null, 4)}
-            </pre>
+            </pre> */}
             {/* <pre>{JSON.stringify(imgColor, null, 4)}</pre> */}
           </Box>
         </Box>
