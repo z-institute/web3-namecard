@@ -10,8 +10,12 @@ import useEnsData from "../hooks/useEns";
 
 const Home: NextPage = () => {
   const [domainName, setDomainName] = useState("cheyuwu.eth");
-  const ensData = useEnsData(undefined, "cheyuwu.eth");
+  const [finalDomainName, setFinalDomainName] = useState(domainName);
+  const ensData = useEnsData(undefined, finalDomainName);
 
+  const setQuery = () => {
+    setFinalDomainName(domainName)
+  }
   return (
     <>
       <Head>
@@ -35,11 +39,13 @@ const Home: NextPage = () => {
             value={domainName}
             onChange={(e) => setDomainName(e.target.value)}
           ></Input>
-          <Button mt="2" backgroundColor="brand" color="white" w="100%">
+          <Button mt="2" backgroundColor="brand" color="white" w="100%" onClick={setQuery}>
             {" "}
             Fetch
           </Button>
-          <pre>{JSON.stringify(ensData, null, 4)}</pre>
+          <Box mt="5">
+            <pre style={{ width: '500px', whiteSpace: 'pre-line' }}>{JSON.stringify(ensData, null, 4)}</pre>
+          </Box>
         </Box>
 
         <Card cardData={ensData}></Card>
