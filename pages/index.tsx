@@ -109,7 +109,7 @@ const Home: NextPage = () => {
             }
             mt="5"
             value={domainName}
-            placeholder="Enter your ens domain name"
+            placeholder="Enter your ens domain name or your Ethereum address"
             onChange={(e: { target: { value: SetStateAction<string> } }) => {
               if (e.target.value.toString().startsWith("0x")) {
                 setDomainName(e.target.value);
