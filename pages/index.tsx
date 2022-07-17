@@ -1,10 +1,13 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import Card from '../components/Card';
-import { Center } from '@chakra-ui/react';
+import { Center } from "@chakra-ui/react";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import type { NextPage } from "next";
+import Head from "next/head";
+import Card from "../components/Card";
+import useEnsData from "../hooks/useEns";
 
 const Home: NextPage = () => {
+  const ensData = useEnsData();
+
   return (
     <>
       <Head>
@@ -15,14 +18,13 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <Center w="100%" height="100vh" backgroundColor='gray.100'>
+      <Center w="100%" height="100vh" backgroundColor="gray.100">
         <ConnectButton />
 
         <Card></Card>
-      </Center >
-
-    </ >
+        <div>{JSON.stringify(ensData)}</div>
+      </Center>
+    </>
   );
 };
 
