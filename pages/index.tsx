@@ -1,18 +1,29 @@
+import {
+  Box,
+  Button,
+  Center,
+  Heading,
+  HStack,
+  Image,
+  Input,
+  Link,
+  SimpleGrid,
+  Text,
+} from "@chakra-ui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useState } from "react";
 import Card from "../components/Card";
-import { Center, Box, Heading, HStack } from "@chakra-ui/react";
-import { Input } from "@chakra-ui/react";
-import { Button, ButtonGroup } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
 import useEnsData from "../hooks/useEns";
 import useImgColor from "../hooks/useImgColor";
+import useNFT from "../hooks/useNFT";
 
 const Home: NextPage = () => {
   const [domainName, setDomainName] = useState("");
   const [finalDomainName, setFinalDomainName] = useState(domainName);
   const ensData = useEnsData(undefined, finalDomainName);
+  const nft = useNFT();
 
   const imgColor = useImgColor(ensData.avatarUrl || "");
 
@@ -22,12 +33,11 @@ const Home: NextPage = () => {
 
   const convertColor = (clr) => {
     if (clr) {
-      return `rgb(${clr._rgb[0]},${clr._rgb[1]},${clr._rgb[2]})`
+      return `rgb(${clr._rgb[0]},${clr._rgb[1]},${clr._rgb[2]})`;
     } else {
-      return `rgb(0,0,0)`
-
+      return `rgb(0,0,0)`;
     }
-  }
+  };
   return (
     <>
       <Head>
@@ -39,7 +49,12 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Center w="100%" height="100vh" backgroundColor={convertColor(imgColor && imgColor[0])} transitionDuration="1s">
+      <Center
+        w="100%"
+        height="100vh"
+        backgroundColor={convertColor(imgColor && imgColor[0])}
+        transitionDuration="1s"
+      >
         <Box>
           <Heading mb={5} color="brand-dark">
             The ENS Namecard
@@ -62,7 +77,7 @@ const Home: NextPage = () => {
             Fetch
           </Button>
           <Box mt="5">
-            <HStack mb={4}>
+            {/* <HStack mb={4}>
               {imgColor &&
                 imgColor.map((data, dataId) => (
                   <Box
@@ -73,7 +88,7 @@ const Home: NextPage = () => {
                     backgroundColor={convertColor(data)}
                   ></Box>
                 ))}
-            </HStack>
+            </HStack> */}
             {/* <pre style={{ width: "500px", whiteSpace: "pre-line" }}>
               {JSON.stringify(imgColor, null, 4)}
             </pre> */}
@@ -81,11 +96,32 @@ const Home: NextPage = () => {
               {JSON.stringify(ensData, null, 4)}
             </pre> */}
             {/* <pre>{JSON.stringify(imgColor, null, 4)}</pre> */}
+            {/* <pre>{JSON.stringify(nft, null, 4)}</pre> */}
+            <Heading mb={4} color="brand-dark" fontSize="20px">
+              NFTs:
+            </Heading>
+            <SimpleGrid mb={4} columns={5} spacing={1}>
+              {nft &&
+                nft.map((data) => (
+                  <Link href={data.permalink} isExternal>
+                    <Image
+                      borderRadius="full"
+                      boxSize="90px"
+                      key={data.id}
+                      src={data.image_preview_url}
+                    />
+                    <Text fontSize="xs" mt="10px">
+                      {data.name}
+                    </Text>
+                  </Link>
+                ))}
+            </SimpleGrid>
           </Box>
         </Box>
 
         <Card cardData={ensData}></Card>
       </Center>
+
       <Box></Box>
     </>
   );
