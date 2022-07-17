@@ -39,10 +39,10 @@ const Home: NextPage = () => {
             {" "}
             Fetch
           </Button>
+          <div>{JSON.stringify(ensData, null, 4)}</div>
         </Box>
 
-        <Card></Card>
-        <div>{JSON.stringify(ensData)}</div>
+        <Card cardData={ensData}></Card>
       </Center>
     </>
   );

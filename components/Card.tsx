@@ -7,9 +7,10 @@ import { Link } from '@chakra-ui/react'
 import { FaTwitter, FaDiscord, FaFacebookF, FaGithub } from "react-icons/fa";
 
 //https://www.w3schools.com/howto/howto_css_flip_card.asp
-const Card = () => {
+const Card = ({ cardData }) => {
   const [isFlipped, setIsFlipped] = useState(true);
 
+  const getLastName = (str: String) => (str || '').split("/").slice(-1)[0]
   useEffect(() => {
     let timer = setInterval(() => {
       setIsFlipped(!isFlipped)
@@ -18,6 +19,7 @@ const Card = () => {
       clearInterval(timer)
     }
   }, [])
+
   return <Box m="50" className={styles['flip-card']} onClick={() => setIsFlipped(!isFlipped)}>
     <Box w={520} h={300} className={classnames(styles['flip-card-inner'], { [styles['flipped']]: isFlipped })} >
       <Center w="100%" h="100%" shadow="xl"
@@ -38,33 +40,27 @@ const Card = () => {
               <Text color="brand">Boss, Coding Please</Text>
               <Spacer></Spacer>
               <Box>
-                <Heading>Che-Yu Wu</Heading>
-                <Text>cheyuwu.eth</Text>
+                {/* <Heading>Che-Yu Wu</Heading> */}
+                <Heading>{cardData._ensName}</Heading>
+                {/* {JSON.stringify(cardData)} */}
+                <Text>{cardData.email}</Text>
               </Box>
             </Flex>
             <VStack borderLeft="solid 1px white" borderColor='brand'
               spacing="2" flex={4} align="flex-start"
               pl="5">
-              <Link href={`https://twitter.com/cheyuwu345`} isExternal>
+              <Link href={cardData.twitter} isExternal>
                 <Flex align='center'>
                   <FaTwitter />
-                  <Text ml="3">Twitter: cheyuwu345</Text>
+                  <Text ml="3">Twitter: {getLastName(cardData.twitter)}</Text>
                 </Flex>
               </Link>
 
 
-              <Link href={`https://www.facebook.com/cheyuwu345`} isExternal>
-                <Flex align='center'>
-                  <FaFacebookF />
-                  <Text ml="3">FaceBook: cheyuwu345</Text>
-                </Flex>
-              </Link>
-
-
-              <Link href={`https://github.com/frank890417`} isExternal>
+              <Link href={cardData.github} isExternal>
                 <Flex align='center'>
                   <FaGithub />
-                  <Text ml="3">Github: cheyuwu345</Text>
+                  <Text ml="3">Github: {getLastName(cardData.github)}</Text>
                 </Flex>
               </Link>
             </VStack>
