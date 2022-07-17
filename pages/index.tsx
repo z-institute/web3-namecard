@@ -2,7 +2,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Card from "../components/Card";
-import { Center, Box, Heading } from "@chakra-ui/react";
+import { Center, Box, Heading, HStack } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
 import { Button, ButtonGroup } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
@@ -11,11 +11,12 @@ import useImgColor from "../hooks/useImgColor";
 
 const Home: NextPage = () => {
   const [domainName, setDomainName] = useState("cheyuwu.eth");
-  const imgColor = useImgColor(
-    "https://avatars0.githubusercontent.com/u/8186681?s=460&v=4"
-  );
   const [finalDomainName, setFinalDomainName] = useState(domainName);
   const ensData = useEnsData(undefined, finalDomainName);
+
+  const imgColor = useImgColor(
+    ensData.avatarUrl || ''
+  );
 
   const setQuery = () => {
     setFinalDomainName(domainName);
@@ -54,6 +55,17 @@ const Home: NextPage = () => {
             Fetch
           </Button>
           <Box mt="5">
+            <HStack mb={4}>
+              {
+                imgColor && imgColor.map((data, dataId) =>
+                  <Box key={dataId} w={50} h={50}
+                    backgroundColor={`rgb(${data._rgb[0]},${data._rgb[1]},${data._rgb[2]})`}></Box>
+                )
+              }
+            </HStack>
+            {/* <pre style={{ width: "500px", whiteSpace: "pre-line" }}>
+              {JSON.stringify(imgColor, null, 4)}
+            </pre> */}
             <pre style={{ width: "500px", whiteSpace: "pre-line" }}>
               {JSON.stringify(ensData, null, 4)}
             </pre>

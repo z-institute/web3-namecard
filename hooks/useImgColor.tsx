@@ -4,7 +4,7 @@ import { useState } from "react";
 const useImgColor = (imgUrl: string) => {
   const [color, setColor] = useState(undefined);
   getColors(imgUrl).then((colors) => {
-    console.log(colors);
+    // console.log(colors);
     setColor(colors);
   });
 
