@@ -49,7 +49,11 @@ const Home: NextPage = () => {
         </Box>
 
         <Card cardData={ensData}></Card>
+
       </Center>
+      <Box>
+
+      </Box>
     </>
   );
 };

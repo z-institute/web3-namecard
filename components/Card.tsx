@@ -2,10 +2,10 @@
 import styles from '../styles/card.module.css';
 import { Heading, Box, Center, Image, Text, VStack, Flex, Spacer } from '@chakra-ui/react'
 import { useState, useEffect } from 'react';
-import classnames from 'classnames'
+import classNames from 'classnames'
 import { Link } from '@chakra-ui/react'
-import { FaTwitter, FaDiscord, FaFacebookF, FaGithub } from "react-icons/fa";
-
+import { FaTwitter, FaDiscord, FaGlobe, FaGithub } from "react-icons/fa";
+import { animate__bounce } from 'animate.css/animate.css'
 //https://www.w3schools.com/howto/howto_css_flip_card.asp
 const Card = ({ cardData }) => {
   const [isFlipped, setIsFlipped] = useState(true);
@@ -24,8 +24,8 @@ const Card = ({ cardData }) => {
   //   }
   // }, [])
 
-  return <Box m="50" className={styles['flip-card']} onClick={() => setIsFlipped(!isFlipped)}>
-    <Box w={520} h={300} className={classnames(styles['flip-card-inner'], { [styles['flipped']]: isFlipped })} >
+  return <Box m="50" className={classNames(styles['flip-card'], animate__bounce)} onClick={() => setIsFlipped(!isFlipped)}>
+    <Box w={520} h={300} className={classNames(styles['flip-card-inner'], { [styles['flipped']]: isFlipped })} >
       <Center w="100%" h="100%" shadow="xl"
         className={styles['flip-card-front']} backgroundColor="brand-black"
         borderRadius="xl" overflow="hidden">
@@ -45,7 +45,7 @@ const Card = ({ cardData }) => {
               <Spacer></Spacer>
               <Box>
                 {/* <Heading>Che-Yu Wu</Heading> */}
-                <Image my={3} boxSize="150px" src={cardData.avatarUrl} alt="" />
+                {cardData.avatarUrl && <Image my={3} boxSize="150px" src={cardData.avatarUrl} alt="" />}
                 <Heading>{cardData.ensName}</Heading>
                 {/* {JSON.stringify(cardData)} */}
                 <Text>{cardData.email}</Text>
@@ -54,7 +54,10 @@ const Card = ({ cardData }) => {
             <VStack borderLeft="solid 1px white" borderColor='brand'
               spacing="2" flex={4} align="flex-start"
               pl="5">
-              <Link href={cardData.twitter} isExternal>
+
+
+
+              <Link href={'https://twitter.com/' + cardData.twitter} isExternal>
                 <Flex align='center'>
                   <FaTwitter />
                   <Text ml="3">Twitter: {getLastName(cardData.twitter)}</Text>
@@ -62,12 +65,20 @@ const Card = ({ cardData }) => {
               </Link>
 
 
-              <Link href={cardData.github} isExternal>
+              <Link href={'https://github.com/' + cardData.github} isExternal>
                 <Flex align='center'>
                   <FaGithub />
                   <Text ml="3">Github: {getLastName(cardData.github)}</Text>
                 </Flex>
               </Link>
+
+              {cardData.websiteUrl && <Link href={cardData.websiteUrl} isExternal>
+                <Flex align='center'>
+                  <FaGlobe />
+                  <Text ml="3">Website</Text>
+                </Flex>
+              </Link>}
+
             </VStack>
           </Flex>
           <Flex flex={1}>
