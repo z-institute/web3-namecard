@@ -28,7 +28,7 @@ const useNFT = (_address?: string) => {
       });
   }, [addr]);
 
-  return nfts;
+  return { nfts };
 };
 
 export default useNFT;

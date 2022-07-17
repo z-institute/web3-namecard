@@ -28,7 +28,6 @@ const Home: NextPage = () => {
   const [domainName, setDomainName] = useState("");
   const [finalDomainName, setFinalDomainName] = useState(domainName);
   const ensData: ensDataType = useEnsData(undefined, finalDomainName);
-  const nft = useNFT();
 
   const { address } = useAccount();
   const imgColor: Array<colorRawType> = useImgColor(ensData.avatarUrl || "");
@@ -169,10 +168,7 @@ const Home: NextPage = () => {
             </pre> */}
             {/* <pre>{JSON.stringify(imgColor, null, 4)}</pre> */}
             {/* <pre>{JSON.stringify(nft, null, 4)}</pre> */}
-            <Heading mb={4} color="brand-dark" fontSize="20px">
-              NFTs:
-            </Heading>
-            <NFTCard nfts={nft}></NFTCard>
+            <NFTCard></NFTCard>
           </Box>
         </Box>
 
