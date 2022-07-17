@@ -16,6 +16,7 @@ import Card from "../components/Card";
 import NFTCard from "../components/NFTCard";
 import useEnsData from "../hooks/useEns";
 import useImgColor from "../hooks/useImgColor";
+import { useEnsName } from "wagmi";
 
 import { Spinner } from "@chakra-ui/react";
 import { colorRawType } from "../types/colorRawType";
@@ -24,7 +25,8 @@ import { ensDataType } from "../types/ensDataType";
 const Home: NextPage = () => {
   const [domainName, setDomainName] = useState("");
   const [finalDomainName, setFinalDomainName] = useState(domainName);
-  const ensData: ensDataType = useEnsData(undefined, finalDomainName);
+  const [currentAddr, setCurrentAddr] = useState(undefined);
+  const ensData: ensDataType = useEnsData(currentAddr, finalDomainName);
 
   const imgColor: Array<colorRawType> = useImgColor(ensData.avatarUrl || "");
   const [sortedColors, setSortedColors] = useState<Array<colorRawType>>([]);
@@ -32,6 +34,7 @@ const Home: NextPage = () => {
   const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
+    // console.log(ensData.ensName);
     setIsFetching(!(ensData.ensName == finalDomainName));
   }, [ensData, finalDomainName]);
 
@@ -42,7 +45,8 @@ const Home: NextPage = () => {
   useEffect(() => {
     setDomainName(ensData.ensName || "");
     setFinalDomainName(ensData.ensName || "");
-  }, [ensData]);
+    console.log(currentAddr);
+  }, [ensData, currentAddr]);
 
   useEffect(() => {
     setSortedColors(sortColors(imgColor));
@@ -106,9 +110,14 @@ const Home: NextPage = () => {
             mt="5"
             value={domainName}
             placeholder="Enter your ens domain name"
-            onChange={(e: { target: { value: SetStateAction<string> } }) =>
-              setDomainName(e.target.value)
-            }
+            onChange={(e: { target: { value: SetStateAction<string> } }) => {
+              if (e.target.value.toString().startsWith("0x")) {
+                setDomainName(e.target.value);
+                setCurrentAddr(e.target.value);
+              } else {
+                setDomainName(e.target.value);
+              }
+            }}
           ></Input>
           <HStack spacing="5" mt={2}>
             <Text>Example: </Text>

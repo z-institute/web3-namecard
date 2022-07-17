@@ -14,10 +14,11 @@ const useEns = (_address?: string, _ensName?: string) => {
     },
   });
   useEffect(() => {
-    if (_ensName) {
-      setEnsData(_ensName);
+    if (_ensName || addr) {
+      // console.log(data, _ensName);
+      setEnsData(_ensName || data);
     }
-  }, [_ensName]);
+  }, [_ensName, addr]);
   useEffect(() => {
     if (data) {
       setEnsData(data.toString());
