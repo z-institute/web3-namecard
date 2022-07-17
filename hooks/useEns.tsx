@@ -35,7 +35,7 @@ const useEns = (_address?: string, _ensName?: string) => {
     const github = await resolver.getText("com.github");
     const discord = await resolver.getText("com.discord");
     const websiteUrl = await resolver.getText("url");
-    const ethAddress = await resolver.getAddress(1);
+    const ethAddress = await provider.resolveName(ensName);
     const avatar = await resolver.getAvatar();
     const avatarUrl = avatar?.url;
     setRetEnsData({
