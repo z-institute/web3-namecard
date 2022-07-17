@@ -26,12 +26,16 @@ const useEns = (_address?: string, _ensName?: string) => {
 
   async function setEnsData(ensName: string) {
     const resolver = await provider.getResolver(ensName);
-    const email = await resolver!.getText("email");
-    const twitter = await resolver!.getText("com.twitter");
-    const github = await resolver!.getText("com.github");
-    const discord = await resolver!.getText("com.discord");
-    const websiteUrl = await resolver!.getText("url");
-    const avatar = await resolver!.getAvatar();
+    if (!resolver) {
+      setRetEnsData({});
+      return;
+    }
+    const email = await resolver.getText("email");
+    const twitter = await resolver.getText("com.twitter");
+    const github = await resolver.getText("com.github");
+    const discord = await resolver.getText("com.discord");
+    const websiteUrl = await resolver.getText("url");
+    const avatar = await resolver.getAvatar();
     const avatarUrl = avatar?.url;
     setRetEnsData({
       email,

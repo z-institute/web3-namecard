@@ -10,13 +10,11 @@ import useEnsData from "../hooks/useEns";
 import useImgColor from "../hooks/useImgColor";
 
 const Home: NextPage = () => {
-  const [domainName, setDomainName] = useState("cheyuwu.eth");
+  const [domainName, setDomainName] = useState("");
   const [finalDomainName, setFinalDomainName] = useState(domainName);
   const ensData = useEnsData(undefined, finalDomainName);
 
-  const imgColor = useImgColor(
-    ensData.avatarUrl || ''
-  );
+  const imgColor = useImgColor(ensData.avatarUrl || "");
 
   const setQuery = () => {
     setFinalDomainName(domainName);
@@ -56,12 +54,15 @@ const Home: NextPage = () => {
           </Button>
           <Box mt="5">
             <HStack mb={4}>
-              {
-                imgColor && imgColor.map((data, dataId) =>
-                  <Box key={dataId} w={50} h={50}
-                    backgroundColor={`rgb(${data._rgb[0]},${data._rgb[1]},${data._rgb[2]})`}></Box>
-                )
-              }
+              {imgColor &&
+                imgColor.map((data, dataId) => (
+                  <Box
+                    key={dataId}
+                    w={50}
+                    h={50}
+                    backgroundColor={`rgb(${data._rgb[0]},${data._rgb[1]},${data._rgb[2]})`}
+                  ></Box>
+                ))}
             </HStack>
             {/* <pre style={{ width: "500px", whiteSpace: "pre-line" }}>
               {JSON.stringify(imgColor, null, 4)}
@@ -74,11 +75,8 @@ const Home: NextPage = () => {
         </Box>
 
         <Card cardData={ensData}></Card>
-
       </Center>
-      <Box>
-
-      </Box>
+      <Box></Box>
     </>
   );
 };
