@@ -1,5 +1,5 @@
 
-import styles from '../styles/Card.module.css';
+import styles from '../styles/card.module.css';
 import { Heading, Box, Center, Image, Text, VStack, Flex, Spacer } from '@chakra-ui/react'
 import { useState, useEffect } from 'react';
 import classnames from 'classnames'
@@ -11,21 +11,25 @@ const Card = ({ cardData }) => {
   const [isFlipped, setIsFlipped] = useState(true);
 
   const getLastName = (str: String) => (str || '').split("/").slice(-1)[0]
+
   useEffect(() => {
-    let timer = setInterval(() => {
-      setIsFlipped(!isFlipped)
-    }, 5000)
-    return () => {
-      clearInterval(timer)
-    }
-  }, [])
+    setIsFlipped(false)
+  }, [cardData])
+  // useEffect(() => {
+  //   let timer = setInterval(() => {
+  //     setIsFlipped(!isFlipped)
+  //   }, 5000)
+  //   return () => {
+  //     clearInterval(timer)
+  //   }
+  // }, [])
 
   return <Box m="50" className={styles['flip-card']} onClick={() => setIsFlipped(!isFlipped)}>
     <Box w={520} h={300} className={classnames(styles['flip-card-inner'], { [styles['flipped']]: isFlipped })} >
       <Center w="100%" h="100%" shadow="xl"
         className={styles['flip-card-front']} backgroundColor="brand-black"
         borderRadius="xl" overflow="hidden">
-        <Image boxSize="600px" src={cardData.avatarUrl} alt="" />
+        <Image w="100%" src={cardData.avatarUrl} alt="" />
       </Center>
       <Center w="100%" h="100%" shadow="xl"
         backgroundColor="black"
@@ -41,7 +45,8 @@ const Card = ({ cardData }) => {
               <Spacer></Spacer>
               <Box>
                 {/* <Heading>Che-Yu Wu</Heading> */}
-                <Heading>{cardData._ensName}</Heading>
+                <Image my={3} boxSize="150px" src={cardData.avatarUrl} alt="" />
+                <Heading>{cardData.ensName}</Heading>
                 {/* {JSON.stringify(cardData)} */}
                 <Text>{cardData.email}</Text>
               </Box>
@@ -66,7 +71,9 @@ const Card = ({ cardData }) => {
             </VStack>
           </Flex>
           <Flex flex={1}>
-            <Box fontSize="7xl" mb={-5} className={styles['stroke-text']} >Che-Yu Wu</Box>
+            <Box fontSize="7xl" mb={-5} className={styles['stroke-text']} >
+              {cardData.ensName}
+            </Box>
           </Flex>
         </Flex>
       </Center>
