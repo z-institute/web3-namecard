@@ -6,6 +6,16 @@ import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 import * as React from 'react'
+import { extendTheme } from '@chakra-ui/react'
+
+
+const theme = extendTheme({
+  colors: {
+    'brand': '#B99362',
+    'brand-black': '#19191A',
+  },
+})
+
 
 import { ChakraProvider } from '@chakra-ui/react'
 
@@ -43,7 +53,7 @@ const wagmiClient = createClient({
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <WagmiConfig client={wagmiClient}>
         <RainbowKitProvider chains={chains}>
           <Component {...pageProps} />

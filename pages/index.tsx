@@ -2,9 +2,13 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Card from '../components/Card';
-import { Center } from '@chakra-ui/react';
-
+import { Center, Box, Heading } from '@chakra-ui/react';
+import { Input } from '@chakra-ui/react'
+import { Button, ButtonGroup } from '@chakra-ui/react'
+import { useState, useEffect } from 'react';
 const Home: NextPage = () => {
+  const [domainName, setDomainName] = useState('cheyuwu.eth');
+
   return (
     <>
       <Head>
@@ -17,7 +21,14 @@ const Home: NextPage = () => {
       </Head>
 
       <Center w="100%" height="100vh" backgroundColor='gray.100'>
-        <ConnectButton />
+        <Box>
+          <Heading mb={5} color='brand-dark'>The ENS Namecard</Heading>
+
+          <ConnectButton />
+          <Input mt='5' value={domainName} onChange={(e) => setDomainName(e.target.value)}></Input>
+          <Button mt='2' backgroundColor='brand' color='white' w="100%"> Fetch</Button>
+
+        </Box>
 
         <Card></Card>
       </Center >

@@ -37,3 +37,7 @@
   font-weight: 900; 
   -webkit-text-stroke: 1px #B99362;
 }
+
+.socials{
+  border-left: solid 1px #B99362;
+}
