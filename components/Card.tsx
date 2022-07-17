@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import classNames from 'classnames'
 import { Link } from '@chakra-ui/react'
 import { FaTwitter, FaDiscord, FaGlobe, FaGithub } from "react-icons/fa";
-import { animate__fadeIn } from 'animate.css/animate.css'
 //https://www.w3schools.com/howto/howto_css_flip_card.asp
 const Card = ({ cardData }) => {
   const [isFlipped, setIsFlipped] = useState(true);
@@ -15,16 +14,17 @@ const Card = ({ cardData }) => {
   useEffect(() => {
     setIsFlipped(false)
   }, [cardData])
-  // useEffect(() => {
-  //   let timer = setInterval(() => {
-  //     setIsFlipped(!isFlipped)
-  //   }, 5000)
-  //   return () => {
-  //     clearInterval(timer)
-  //   }
-  // }, [])
 
-  return <Box key={cardData.ensName} m="50" className={classNames(styles['flip-card'], animate__fadeIn)} onClick={() => setIsFlipped(!isFlipped)}>
+  useEffect(() => {
+    let timer = setInterval(() => {
+      setIsFlipped(!isFlipped)
+    }, 6000)
+    return () => {
+      clearInterval(timer)
+    }
+  }, [])
+
+  return <Box key={cardData.ensName} m="50" className={classNames(styles['flip-card'])} onClick={() => setIsFlipped(!isFlipped)}>
     <Box w={520} h={300} className={classNames(styles['flip-card-inner'], { [styles['flipped']]: isFlipped })} >
       <Center w="100%" h="100%" shadow="xl"
         className={styles['flip-card-front']} backgroundColor="brand-black"
