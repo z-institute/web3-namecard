@@ -27,11 +27,12 @@ const Card = () => {
       <Center w="100%" h="100%" shadow="xl"
         backgroundColor="black"
         color="white"
+        p={5}
         className={styles['flip-card-back']}
         borderRadius="xl" overflow="hidden"
       >
-        <Flex direction="column">
-          <Flex>
+        <Flex direction="column" w="100%" h='100%'>
+          <Flex flex={5}>
             <Flex flex={6} direction="column">
               <Text>Boss, Coding Please</Text>
               <Spacer></Spacer>
@@ -40,17 +41,19 @@ const Card = () => {
                 <Text>cheyuwu.eth</Text>
               </Box>
             </Flex>
-            <VStack spacing="10" flex={4}>
+            <VStack spacing="2" flex={4}>
               <Text>Twitter: cheyuwu345</Text>
+              <Text>FaceBook: cheyuwu345</Text>
+              <Text>Discord: cheyuwu345</Text>
             </VStack>
           </Flex>
-          <Flex>
-            <Heading className={styles['stroke-text']} >Che-Yu Wu</Heading>
+          <Flex flex={1}>
+            <Box fontSize="4xl" className={styles['stroke-text']} >Che-Yu Wu</Box>
           </Flex>
         </Flex>
       </Center>
     </Box>
-  </Box>
+  </Box >
 }
 
 export default Card

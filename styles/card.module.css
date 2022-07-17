@@ -31,7 +31,9 @@
   transform: rotateY(180deg);
 }
 
-.stroke-text{
-  color: #B99362;
-  -webkit-text-stroke: solid 1px #B99362;
+.stroke-text{ 
+  color: transparent;
+  font-size: 60px;
+  font-weight: 900; 
+  -webkit-text-stroke: 1px #B99362;
 }
