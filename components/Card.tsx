@@ -6,14 +6,22 @@ import classNames from 'classnames'
 import { Link } from '@chakra-ui/react'
 import { FaTwitter, FaDiscord, FaGlobe, FaGithub } from "react-icons/fa";
 //https://www.w3schools.com/howto/howto_css_flip_card.asp
-const Card = ({ cardData }) => {
+const Card = ({ cardData, cardBgColor, colors }) => {
   const [isFlipped, setIsFlipped] = useState(true);
 
+  const convertColor = (clr) => {
+    if (clr) {
+      return `rgb(${clr._rgb[0]},${clr._rgb[1]},${clr._rgb[2]})`
+    } else {
+      return false
+    }
+  }
   const getLastName = (str: String) => (str || '').split("/").slice(-1)[0]
 
   useEffect(() => {
     setIsFlipped(false)
   }, [cardData])
+
 
   useEffect(() => {
     let timer = setInterval(() => {
@@ -25,23 +33,25 @@ const Card = ({ cardData }) => {
   }, [])
 
   return <Box key={cardData.ensName} m="50" className={classNames(styles['flip-card'])} onClick={() => setIsFlipped(!isFlipped)}>
-    <Box w={520} h={300} className={classNames(styles['flip-card-inner'], { [styles['flipped']]: isFlipped })} >
-      <Center w="100%" h="100%" shadow="xl"
-        className={styles['flip-card-front']} backgroundColor="brand-black"
-        borderRadius="xl" overflow="hidden">
-        <Image w="100%" src={cardData.avatarUrl} alt="" />
+    <Box w={320} h={520} className={classNames(styles['flip-card-inner'], { [styles['flipped']]: isFlipped })} >
+      <Center w="100%" h="100%" boxShadow='2xl'
+        className={styles['flip-card-front']} backgroundColor={cardBgColor || 'brand-black'}
+        borderRadius="xl" overflow="hidden"
+        backgroundImage={cardData.avatarUrl}
+        backgroundSize='cover'
+        backgroundPosition='center'>
+        {/* <Image boxSize="100%" src={cardData.avatarUrl} alt="" /> */}
       </Center>
-      <Center w="100%" h="100%" shadow="xl"
-        backgroundColor="black"
+      <Center w="100%" h="100%" boxShadow='2xl' backgroundColor={cardBgColor || 'brand-black'}
         color="white"
         p={5}
         className={styles['flip-card-back']}
         borderRadius="xl" overflow="hidden"
       >
         <Flex direction="column" w="100%" h='100%'>
-          <Flex flex={5}>
+          <Flex flex={5} direction="column">
             <Flex flex={3} direction="column" pr="5">
-              <Text color="brand">Boss, Coding Please</Text>
+              <Text color={convertColor(colors[4]) || 'brand'}>Boss, Coding Please</Text>
               <Spacer></Spacer>
               <Box>
                 {/* <Heading>Che-Yu Wu</Heading> */}
@@ -51,9 +61,9 @@ const Card = ({ cardData }) => {
                 <Text>{cardData.email}</Text>
               </Box>
             </Flex>
-            <VStack borderLeft="solid 1px white" borderColor='brand'
+            <VStack borderTop="solid 1px white" borderColor={convertColor(colors[4]) || 'brand'}
               spacing="2" flex={4} align="flex-start"
-              pl="5">
+              mt="5" pt='5'>
 
 
 
@@ -82,7 +92,7 @@ const Card = ({ cardData }) => {
             </VStack>
           </Flex>
           <Flex flex={1}>
-            <Box fontSize="7xl" mb={-5} className={styles['stroke-text']} >
+            <Box fontSize="7xl" mb={-5} style={{ "-webkit-text-stroke": `1px ${colors[3]}`, color: 'transparent', fontWeight: 900 }}>
               {cardData.ensName}
             </Box>
           </Flex>
