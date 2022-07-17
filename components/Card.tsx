@@ -8,6 +8,13 @@ import { FaTwitter, FaDiscord, FaGlobe, FaGithub } from "react-icons/fa";
 import { colorRawType } from "../types/colorRawType"
 //https://www.w3schools.com/howto/howto_css_flip_card.asp
 
+const convertColor = (clr: colorRawType | undefined) => {
+  if (clr) {
+    return `rgb(${clr._rgb[0]},${clr._rgb[1]},${clr._rgb[2]})`;
+  } else {
+    return "";
+  }
+};
 interface cardProps {
   cardData: {
     ensName?: string,
@@ -107,7 +114,7 @@ const Card = ({ cardData, cardBgColor, colors }: cardProps) => {
           </Flex>
           <Flex flex={1}>
             {// @ts-ignore
-              <Box fontSize="7xl" mb={-5} style={{ "-webkit-text-stroke": `1px ${colors[3]}`, color: 'transparent', fontWeight: 900 }}>
+              <Box fontSize="7xl" mb={-5} style={{ "-webkit-text-stroke": `1px ${convertColor(colors[3])}`, color: 'transparent', fontWeight: 900 }}>
                 {cardData.ensName}
               </Box>
             }
