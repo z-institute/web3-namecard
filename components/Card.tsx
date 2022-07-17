@@ -25,7 +25,7 @@ const Card = ({ cardData }) => {
       <Center w="100%" h="100%" shadow="xl"
         className={styles['flip-card-front']} backgroundColor="brand-black"
         borderRadius="xl" overflow="hidden">
-        <Image boxSize="600px" src="https://media.artblocks.io/216000000.png" alt="" />
+        <Image boxSize="600px" src={cardData.avatarUrl} alt="" />
       </Center>
       <Center w="100%" h="100%" shadow="xl"
         backgroundColor="black"
