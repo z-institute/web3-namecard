@@ -13,12 +13,8 @@ import {
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useState } from "react";
 import Card from "../components/Card";
 
-import { Center, Box, Heading, HStack } from "@chakra-ui/react";
-import { Input } from "@chakra-ui/react";
-import { Button, ButtonGroup, Link, Text } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import useEnsData from "../hooks/useEns";
 import useImgColor from "../hooks/useImgColor";
