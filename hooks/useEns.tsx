@@ -29,6 +29,7 @@ const useEns = (_address?: string, _ensName?: string) => {
     const email = await resolver!.getText("email");
     const twitter = await resolver!.getText("com.twitter");
     const github = await resolver!.getText("com.github");
+    const websiteUrl = await resolver!.getText("url");
     const avatar = await resolver!.getAvatar();
     const avatarUrl = avatar?.url;
     setRetEnsData({
@@ -37,6 +38,7 @@ const useEns = (_address?: string, _ensName?: string) => {
       github,
       ensName,
       avatarUrl,
+      websiteUrl,
     });
   }
 

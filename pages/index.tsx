@@ -7,10 +7,14 @@ import { Input } from "@chakra-ui/react";
 import { Button, ButtonGroup } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import useEnsData from "../hooks/useEns";
+import useImgColor from "../hooks/useImgColor";
 
 const Home: NextPage = () => {
   const [domainName, setDomainName] = useState("cheyuwu.eth");
   const ensData = useEnsData(undefined, "cheyuwu.eth");
+  const imgColor = useImgColor(
+    "https://avatars0.githubusercontent.com/u/8186681?s=460&v=4"
+  );
 
   return (
     <>
@@ -40,6 +44,7 @@ const Home: NextPage = () => {
             Fetch
           </Button>
           <pre>{JSON.stringify(ensData, null, 4)}</pre>
+          <pre>{JSON.stringify(imgColor, null, 4)}</pre>
         </Box>
 
         <Card cardData={ensData}></Card>
