@@ -1,14 +1,25 @@
+import {
+  Box,
+  Button,
+  Center,
+  Heading,
+  HStack,
+  Image,
+  Input,
+  Link,
+  SimpleGrid,
+  Text,
+} from "@chakra-ui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Card from "../components/Card";
-import { Center, Box, Heading, HStack } from "@chakra-ui/react";
-import { Input } from "@chakra-ui/react";
-import { Button, ButtonGroup, Link, Text } from "@chakra-ui/react";
 import { useState, useEffect, SetStateAction } from "react";
 import useEnsData from "../hooks/useEns";
 import useImgColor from "../hooks/useImgColor";
-import { Spinner } from '@chakra-ui/react'
+import useNFT from "../hooks/useNFT";
+
+import { Spinner } from "@chakra-ui/react";
 import { isCommunityResourcable } from "@ethersproject/providers";
 import { useProvider, useEnsName, useAccount } from "wagmi";
 import { ensDataType } from "../types/ensDataType";
@@ -20,6 +31,8 @@ const Home: NextPage = () => {
   const [domainName, setDomainName] = useState("");
   const [finalDomainName, setFinalDomainName] = useState(domainName);
   const ensData: ensDataType = useEnsData(undefined, finalDomainName);
+  const nft = useNFT();
+
   const { address } = useAccount();
   const imgColor: Array<colorRawType> = useImgColor(ensData.avatarUrl || "");
   const [sortedColors, setSortedColors] = useState<Array<colorRawType>>([]);
@@ -27,8 +40,8 @@ const Home: NextPage = () => {
   const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
-    setIsFetching(!(ensData.ensName == finalDomainName))
-  }, [ensData, finalDomainName])
+    setIsFetching(!(ensData.ensName == finalDomainName));
+  }, [ensData, finalDomainName]);
 
   const setQuery = () => {
     setFinalDomainName(domainName);
@@ -40,21 +53,20 @@ const Home: NextPage = () => {
   }, [ensData])
 
   useEffect(() => {
-    setSortedColors(sortColors(imgColor))
-  }, [imgColor])
-
+    setSortedColors(sortColors(imgColor));
+  }, [imgColor]);
 
   const convertColor = (clr: colorRawType | undefined) => {
     if (clr) {
-      return `rgb(${clr._rgb[0]},${clr._rgb[1]},${clr._rgb[2]})`
+      return `rgb(${clr._rgb[0]},${clr._rgb[1]},${clr._rgb[2]})`;
     } else {
       return ''
     }
-  }
+  };
 
   const getBrightness = (clr: colorRawType) => {
     if (clr) {
-      return clr._rgb[0] * 0.299 + clr._rgb[1] * 0.587 + clr._rgb[2] * 0.114
+      return clr._rgb[0] * 0.299 + clr._rgb[1] * 0.587 + clr._rgb[2] * 0.114;
     } else {
       return 0
     }
@@ -62,14 +74,13 @@ const Home: NextPage = () => {
   const sortColors = (colors: Array<colorRawType>) => {
     if (!colors) return []
     let clrs = colors
-      .map(clr => ({ clr, brightness: getBrightness(clr) }))
-      .sort((a, b) => { return a.brightness - b.brightness })
-      .map(({ clr }) => clr)
-    return clrs
-
-  }
-
-
+      .map((clr) => ({ clr, brightness: getBrightness(clr) }))
+      .sort((a, b) => {
+        return a.brightness - b.brightness;
+      })
+      .map(({ clr }) => clr);
+    return clrs;
+  };
 
   return (
     <>
@@ -82,18 +93,25 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Center w="100%" height="100vh"
-        backgroundColor={convertColor(sortedColors[4]) || 'gray.100'} transitionDuration="1s">
+      <Center
+        w="100%"
+        height="100vh"
+        backgroundColor={convertColor(sortedColors[4]) || "gray.100"}
+        transitionDuration="1s"
+      >
         <Box px="5">
-          <Heading mb={5}
-            color={sortedColors[0] ? convertColor(sortedColors[0]) : 'gray.100'}>
+          <Heading
+            mb={5}
+            color={sortedColors[0] ? convertColor(sortedColors[0]) : "gray.100"}
+          >
             The ENS Namecard
           </Heading>
 
           <ConnectButton />
           <Input
-            borderColor={sortedColors[0] ? convertColor(sortedColors[0]) : 'gray.100'}
-
+            borderColor={
+              sortedColors[0] ? convertColor(sortedColors[0]) : "gray.100"
+            }
             mt="5"
             value={domainName}
             placeholder="Enter your ens domain name"
@@ -101,13 +119,28 @@ const Home: NextPage = () => {
           ></Input>
           <HStack spacing="5" mt={2}>
             <Text>Example: </Text>
-            <Link onClick={() => { setDomainName('cheyuwu.eth'); setFinalDomainName('cheyuwu.eth') }}>cheyuwu.eth</Link>
-            <Link onClick={() => { setDomainName('tinaaaaalee.eth'); setFinalDomainName('tinaaaaalee.eth') }}>tinaaaaalee.eth</Link>
-
+            <Link
+              onClick={() => {
+                setDomainName("cheyuwu.eth");
+                setFinalDomainName("cheyuwu.eth");
+              }}
+            >
+              cheyuwu.eth
+            </Link>
+            <Link
+              onClick={() => {
+                setDomainName("tinaaaaalee.eth");
+                setFinalDomainName("tinaaaaalee.eth");
+              }}
+            >
+              tinaaaaalee.eth
+            </Link>
           </HStack>
           <Button
             mt="2"
-            backgroundColor={sortedColors[0] ? convertColor(sortedColors[0]) : 'gray.100'}
+            backgroundColor={
+              sortedColors[0] ? convertColor(sortedColors[0]) : "gray.100"
+            }
             color="white"
             w="100%"
             onClick={setQuery}
@@ -117,7 +150,7 @@ const Home: NextPage = () => {
             {isFetching && <Spinner ml={3} size="sm" color="white" />}
           </Button>
           <Box mt="5">
-            <HStack mb={4}>
+            {/* <HStack mb={4}>
               {imgColor &&
                 sortColors(imgColor).map((data, dataId) => (
                   <Box
@@ -128,7 +161,7 @@ const Home: NextPage = () => {
                     backgroundColor={convertColor(data)}
                   ></Box>
                 ))}
-            </HStack>
+            </HStack> */}
             {/* <pre style={{ width: "500px", whiteSpace: "pre-line" }}>
               {JSON.stringify(imgColor, null, 4)}
             </pre> */}
@@ -136,13 +169,50 @@ const Home: NextPage = () => {
               {JSON.stringify(ensData, null, 4)}
             </pre> */}
             {/* <pre>{JSON.stringify(imgColor, null, 4)}</pre> */}
+            {/* <pre>{JSON.stringify(nft, null, 4)}</pre> */}
+            <Heading mb={4} color="brand-dark" fontSize="20px">
+              NFTs:
+            </Heading>
+            <SimpleGrid mb={4} columns={5} spacing={1}>
+              {nft &&
+                nft.map((data: any) => (
+                  <Link key={data.id} href={data.permalink} isExternal>
+                    <Image
+                      borderRadius="full"
+                      boxSize="90px"
+                      key={data.id}
+                      src={data.image_preview_url}
+                      alt={data.name}
+                    />
+                    <Text fontSize="xs" mt="10px">
+                      {data.name}
+                    </Text>
+                  </Link>
+                ))}
+            </SimpleGrid>
           </Box>
         </Box>
 
-        <Card cardData={ensData} colors={sortedColors} cardBgColor={convertColor(imgColor && imgColor[1])}></Card>
+        <Card
+          cardData={ensData}
+          colors={sortedColors}
+          cardBgColor={convertColor(imgColor && imgColor[1])}
+        ></Card>
       </Center>
-      <Center w="100%" py='3' style={{ position: 'absolute', bottom: 0 }}>
-        This Demo is made by <Link px={2} isExternal href='https://www.facebook.com/cheyuwu345'>Che-Yu Wu</Link> and <Link px={2} isExternal href='https://www.facebook.com/lee.ting.ting.tina'>Ting-Ting Lee</Link></Center>
+      <Center w="100%" py="3" style={{ position: "absolute", bottom: 0 }}>
+        This Demo is made by{" "}
+        <Link px={2} isExternal href="https://www.facebook.com/cheyuwu345">
+          Che-Yu Wu
+        </Link>{" "}
+        and{" "}
+        <Link
+          px={2}
+          isExternal
+          href="https://www.facebook.com/lee.ting.ting.tina"
+        >
+          Ting-Ting Lee
+        </Link>
+      </Center>
     </>
   );
 };
