@@ -4,7 +4,6 @@ import {
   Center,
   Heading,
   HStack,
-  Image,
   Input,
   Link,
   SimpleGrid,
@@ -13,19 +12,17 @@ import {
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import Head from "next/head";
+import { SetStateAction, useEffect, useState } from "react";
 import Card from "../components/Card";
-import { useState, useEffect, SetStateAction } from "react";
+import NFTCard from "../components/NFTCard";
 import useEnsData from "../hooks/useEns";
 import useImgColor from "../hooks/useImgColor";
 import useNFT from "../hooks/useNFT";
 
 import { Spinner } from "@chakra-ui/react";
-import { isCommunityResourcable } from "@ethersproject/providers";
-import { useProvider, useEnsName, useAccount } from "wagmi";
+import { useAccount } from "wagmi";
+import { colorRawType } from "../types/colorRawType";
 import { ensDataType } from "../types/ensDataType";
-import { colorRawType } from "../types/colorRawType"
-
-
 
 const Home: NextPage = () => {
   const [domainName, setDomainName] = useState("");
@@ -48,9 +45,9 @@ const Home: NextPage = () => {
   };
 
   useEffect(() => {
-    setDomainName(ensData.ensName || '');
-    setFinalDomainName(ensData.ensName || '')
-  }, [ensData])
+    setDomainName(ensData.ensName || "");
+    setFinalDomainName(ensData.ensName || "");
+  }, [ensData]);
 
   useEffect(() => {
     setSortedColors(sortColors(imgColor));
@@ -60,7 +57,7 @@ const Home: NextPage = () => {
     if (clr) {
       return `rgb(${clr._rgb[0]},${clr._rgb[1]},${clr._rgb[2]})`;
     } else {
-      return ''
+      return "";
     }
   };
 
@@ -68,11 +65,11 @@ const Home: NextPage = () => {
     if (clr) {
       return clr._rgb[0] * 0.299 + clr._rgb[1] * 0.587 + clr._rgb[2] * 0.114;
     } else {
-      return 0
+      return 0;
     }
-  }
+  };
   const sortColors = (colors: Array<colorRawType>) => {
-    if (!colors) return []
+    if (!colors) return [];
     let clrs = colors
       .map((clr) => ({ clr, brightness: getBrightness(clr) }))
       .sort((a, b) => {
@@ -115,7 +112,9 @@ const Home: NextPage = () => {
             mt="5"
             value={domainName}
             placeholder="Enter your ens domain name"
-            onChange={(e: { target: { value: SetStateAction<string>; }; }) => setDomainName(e.target.value)}
+            onChange={(e: { target: { value: SetStateAction<string> } }) =>
+              setDomainName(e.target.value)
+            }
           ></Input>
           <HStack spacing="5" mt={2}>
             <Text>Example: </Text>
@@ -173,23 +172,7 @@ const Home: NextPage = () => {
             <Heading mb={4} color="brand-dark" fontSize="20px">
               NFTs:
             </Heading>
-            <SimpleGrid mb={4} columns={5} spacing={1}>
-              {nft &&
-                nft.map((data: any) => (
-                  <Link key={data.id} href={data.permalink} isExternal>
-                    <Image
-                      borderRadius="full"
-                      boxSize="90px"
-                      key={data.id}
-                      src={data.image_preview_url}
-                      alt={data.name}
-                    />
-                    <Text fontSize="xs" mt="10px">
-                      {data.name}
-                    </Text>
-                  </Link>
-                ))}
-            </SimpleGrid>
+            <NFTCard nfts={nft}></NFTCard>
           </Box>
         </Box>
 
