@@ -13,7 +13,7 @@ const useNFT = (_address?: string) => {
         method: "GET",
         headers: {
           Accept: "application/json",
-          "X-API-KEY": "aa0237cea5064c919d53d993b765897a",
+          "X-API-KEY": "369d126c15054a758f5be55651e5a04a",
         },
         // mode: "no-cors",
       }
